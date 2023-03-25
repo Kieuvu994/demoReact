@@ -1,6 +1,7 @@
-#React APP
-    "react": "^18.2.0",
-
-
-#Router-dom
-    "react-dom": "^18.2.0",
+1. download and run: node.js 
+https://nodejs.org/en/download
+2. open terminal in vscode coding: 
+    cd myapp        // dia chi thu muc chua project
+    npm install     // waiting finish 
+    npm start       
+3.open Browser: http://localhost:3000/
