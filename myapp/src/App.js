@@ -1,39 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
-import Home from './component/home';
-import News from './component/news';
-import Contact from './component/contact';
+import Home from './component/Home';
+import Detail from './component/Detail';
+import Pay from './component/Pay';
 import { Routes, Route, Link } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
 
       <nav>
-        <div id="menu" className='nav'>
-          <input type="checkbox" id="menu" />
-          <label htmlFor="menu">&#9776;</label>
-
-          <div className='multi-level'>
-            <ul className="item">
-              <li><Link to="/">
-              Home page
-              </Link>
-              </li>
-              <li><Link to="/news">
-                News
-              </Link></li>
-              <li><Link to="/contact">
-                Contact
-              </Link></li>
+        <div className='flexcore'>
+          <div className='nav'>
+            <input type="checkbox" id="menu" />
+            <label htmlFor="menu" className='bar'>&#9776;</label>
+            <ul class="contact-list">
+              <li><Link to="/"> Nam  </Link></li>
+              <li><Link to="/detail">  Nữ  </Link></li>
+              <li><Link to="/pay"> Trẻ Em </Link></li>
             </ul>
-            </div>
+          </div>
+          <div className='mid'>
+            LOGIN
+          </div>
+          <div className='right'>
+            <Link to="/pay"> <img src='images/giohang.png' className='vohang'/></Link>
+          </div>
         </div>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/pay" element={<Pay />} />
       </Routes>
     </div>
   );
