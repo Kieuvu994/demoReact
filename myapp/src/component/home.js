@@ -1,9 +1,23 @@
 import './home.css';
+import items from './items';
 function Home() {
     return (
         <>
-        <img src='images/p001.jpg'/>
+            <div>
+                <div className='product'>
+                    <items/>
+                </div>
+                <div className='product'>
+                <items/>
+                </div>
+                <div className='product'>
+                <items/>
+                </div>
+
+
+
         
+            </div>
         </>
     )
 }

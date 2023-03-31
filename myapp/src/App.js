@@ -14,8 +14,8 @@ function App() {
             <label htmlFor="menu" className='bar'>&#9776;</label>
             <ul class="contact-list">
               <li><Link to="/"> Nam  </Link></li>
-              <li><Link to="/detail">  Nữ  </Link></li>
-              <li><Link to="/pay"> Trẻ Em </Link></li>
+              <li><Link to="/">  Nữ  </Link></li>
+              <li><Link to="/"> Trẻ Em </Link></li>
             </ul>
           </div>
           <div className='mid'>
