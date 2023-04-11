@@ -3,21 +3,7 @@ import items from './items';
 function Home() {
     return (
         <>
-            <div>
-                <div className='product'>
-                    <items/>
-                </div>
-                <div className='product'>
-                <items/>
-                </div>
-                <div className='product'>
-                <items/>
-                </div>
-
-
-
-        
-            </div>
+           <h2>home</h2>
         </>
     )
 }
