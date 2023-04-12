@@ -2,7 +2,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
-function Hearder() {
+import React from "react";
+const Hearder =()=> {
     return (
         <header className="header">
         <div className="header__top">

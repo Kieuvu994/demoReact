@@ -2,18 +2,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../css/nice-select.css";
-function Section() {
+import React,{ useState,useEffect } from 'react';
+const Section = () => {
+  useEffect(() => {
+  }, [])
+
+const [handLeft,sethandLeft] = useState(true);
+const handleClick = () =>{
+  handLeft? sethandLeft(false): sethandLeft(true);
+  }
     return (
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
               <div className="hero__categories">
-                <div className="hero__categories__all">
-                  <i className="bi bi-justify" />
+                <div className="hero__categories__all"  onClick={handleClick}>
+                  <i className="bi bi-grid-3x3-gap-fill" />
                   <span>All departments</span>
                 </div>
-                <ul>
+                <ul style={{display: handLeft?'block':'none'}}>
                   <li><a href="#">Fresh Meat</a></li>
                   <li><a href="#">Vegetables</a></li>
                   <li><a href="#">Fruit &amp; Nut Gifts</a></li>
