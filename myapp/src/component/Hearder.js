@@ -4,6 +4,13 @@ import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React from "react";
 const Hearder =()=> {
+
+
+
+
+
+
+  
     return (
         <header className="header">
         <div className="header__top">
@@ -12,6 +19,7 @@ const Hearder =()=> {
               <div className="col-lg-6 col-md-6">
                 <div className="header__top__left">
                   <ul>
+                    <input type="checkbox" id="darkTheme" name="darkTheme" onclick='onChange(this);'/>
                     <li><i className="fa fa-envelope" /> hello@colorlib.com</li>
                     <li>Free Shipping for all Order of $99</li>
                   </ul>
