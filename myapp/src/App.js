@@ -1,8 +1,8 @@
-import './css/style.css';
+//import './css/style.css';
 import Home from './component/Home';
 import Detail from './component/Detail';
 import Pay from './component/Pay';
-import Hearder from './component/Hearder';
+import Header from './component/Header';
 import Section from './component/Section';
 import Category from './component/Category';
 import { Routes, Route, Link } from 'react-router-dom';
@@ -11,9 +11,10 @@ function App() {
   return (
     <div className="App">
 
-      <Hearder className="hearder"></Hearder>
+      <Header className="header"></Header>
+      
       <Section className='hero'></Section>
-      <Category className="categories"></Category>
+      {/*<Category className="categories"></Category> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail" element={<Detail />} />

@@ -1,26 +1,36 @@
 //import '../css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../css/style.css';
+import '../css/header.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import React from "react";
-const Hearder =()=> {
-
-
-
-
-
+import React, { useState, useEffect } from "react";
+const Header =()=> {
+  const [dark, setDark] = useState(localStorage.getItem('darkTheme') != null ? localStorage.getItem('darkTheme') : false)
+  useEffect(() => {
+    // 
+  }, [])
+  //setDark(localStorage.getItem('darkTheme'));
 
   
+
+  
+  
     return (
-        <header className="header">
+        <header className={dark? "dark":"header"}>
         <div className="header__top">
+
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-md-6">
                 <div className="header__top__left">
                   <ul>
-                    <input type="checkbox" id="darkTheme" name="darkTheme" onclick='onChange(this);'/>
-                    <li><i className="fa fa-envelope" /> hello@colorlib.com</li>
+                    <input type="checkbox" id="darkTheme" 
+                     onChange={()=> {
+                      setDark(!dark);
+                      localStorage.setItem('darkTheme',!dark)
+                    }} 
+                     defaultChecked = {dark}/>
+
+                    <li><i className="fa fa-envelope" /> company@hcmut.edu.vn</li>
                     <li>Free Shipping for all Order of $99</li>
                   </ul>
                 </div>
@@ -54,24 +64,15 @@ const Hearder =()=> {
           <div className="row">
             <div className="col-lg-3">
               <div className="header__logo">
-                <a href="./index.html"><img src="img/logo.png" alt="" /></a>
+                <a href="./"><img src="img/logo.png" alt="" /></a>
               </div>
             </div>
             <div className="col-lg-6">
               <nav className="header__menu">
                 <ul>
-                  <li className="active"><a href="./index.html">Home</a></li>
-                  <li><a href="./shop-grid.html">Shop</a></li>
-                  <li><a href="#">Pages</a>
-                    <ul className="header__menu__dropdown">
-                      <li><a href="./shop-details.html">Shop Details</a></li>
-                      <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                      <li><a href="./checkout.html">Check Out</a></li>
-                      <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="./blog.html">Blog</a></li>
-                  <li><a href="./contact.html">Contact</a></li>
+                  <li className="active"><a href="./">Home</a></li>
+                  <li><a href="./detail">Category</a></li>
+                  <li><a href="./pay">Pay</a></li>
                 </ul>
               </nav>
             </div>
@@ -94,4 +95,4 @@ const Hearder =()=> {
       
     )
 }
-export default Hearder
+export default Header

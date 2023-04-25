@@ -1,6 +1,7 @@
 import { Alert } from 'bootstrap';
 import './home.css';
 import React,{ useState,useEffect } from 'react';
+import Category from './Category';
 const Home=()=> {
     useEffect(() => {
       }, [])
