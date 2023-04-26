@@ -1,4 +1,4 @@
-//import './css/style.css';
+import './css/App.css';
 import Home from './component/Home';
 import Detail from './component/Detail';
 import Pay from './component/Pay';

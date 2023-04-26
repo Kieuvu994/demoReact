@@ -4,7 +4,7 @@ import '../css/header.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React, { useState, useEffect } from "react";
 const Header =()=> {
-  const [dark, setDark] = useState(localStorage.getItem('darkTheme') != null ? localStorage.getItem('darkTheme') : false)
+  //const [dark, setDark] = useState(localStorage.getItem('darkTheme') != null ? localStorage.getItem('darkTheme') : false)
   useEffect(() => {
     // 
   }, [])
@@ -15,7 +15,7 @@ const Header =()=> {
   
   
     return (
-        <header className={dark? "dark":"header"}>
+        <header className="header">
         <div className="header__top">
 
           <div className="container">
@@ -23,12 +23,12 @@ const Header =()=> {
               <div className="col-lg-6 col-md-6">
                 <div className="header__top__left">
                   <ul>
-                    <input type="checkbox" id="darkTheme" 
+                    {/* <input type="checkbox" id="darkTheme" 
                      onChange={()=> {
                       setDark(!dark);
                       localStorage.setItem('darkTheme',!dark)
                     }} 
-                     defaultChecked = {dark}/>
+                     defaultChecked = {dark}/> */}
 
                     <li><i className="fa fa-envelope" /> company@hcmut.edu.vn</li>
                     <li>Free Shipping for all Order of $99</li>

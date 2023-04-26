@@ -1,23 +1,36 @@
 import { Alert } from 'bootstrap';
 import './home.css';
 import React,{ useState,useEffect } from 'react';
-import Category from './Category';
+import {useSelector} from 'react-redux';
+import Api from './Api';
 const Home=()=> {
-    useEffect(() => {
-      }, [])
-    const [disnon,setDisnon] = useState(true);
-    const handleClick = () =>{
-        disnon==true? setDisnon(false): setDisnon(true);
-      }
+  const data = useSelector(s=>s.Home.data);
+  
+  useEffect(() => {
+    fetchData();
+    // setFirstRun(false)
+    // searchData(page, pageSize)
+  }, [])
+
+
+
+const fetchData = () =>{
+  Api.get("p",{
+    params:{
+      cdTp: "SITE_CODE",
+      categoryGroupNm: "SZ0000"
+    },
+  }).then((res)=>{
+    console.log(res.data);
+    data(res.data);
+  })
+}
+
+      
     return (
         <>
-
-           <button onClick={handleClick}>Click Me</button>
-
-
-           <ul  style={{display: disnon?'inline':'none'}}>
-            <li>1</li>
-           </ul>
+  <h1>aaa</h1>
+        
         </>
     )
 }
