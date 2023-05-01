@@ -3,35 +3,45 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React,{ useState,useEffect } from 'react';
+import Api from './Api'
 const Section = () => {
+  const [first,setfirst] =useState(true);
+  const [data,setdata] = useState([{}]);
   useEffect(() => {
+    first?fetchData(): setfirst(false);
   }, [])
 
-const [handLeft,sethandLeft] = useState(true);
-const handleClick = () =>{
-  handLeft? sethandLeft(false): sethandLeft(true);
+  const [handLeft,sethandLeft] = useState(false);
+  const handleClick = () =>{
+    handLeft? sethandLeft(false): sethandLeft(true);
   }
+
+  const fetchData = () =>{
+    const  params = {
+     CodeName: "typ_pro",
+   };
+     Api.get("code",
+      {params: params
+      }).then((res)=>{
+       console.log("code ",res.data.data[1].param_meaning);
+       setdata(res.data.data);
+     })
+   }
+   
+   const left = data.map((e)=> <li><a href="./" onClick={()=>{localStorage.setItem("cate_type",e.code)}}>{e.param_meaning}</a></li>);
+
     return (
+      <section className="hero hero-normal">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
               <div className="hero__categories">
                 <div className="hero__categories__all"  onClick={handleClick}>
                   <i className="bi bi-grid-3x3-gap-fill" />
-                  <span>All departments</span>
+                  <span></span>
                 </div>
                 <ul style={{display: handLeft?'block':'none'}}>
-                  <li><a href="#">Fresh Meat</a></li>
-                  <li><a href="#">Vegetables</a></li>
-                  <li><a href="#">Fruit &amp; Nut Gifts</a></li>
-                  <li><a href="#">Fresh Berries</a></li>
-                  <li><a href="#">Ocean Foods</a></li>
-                  <li><a href="#">Butter &amp; Eggs</a></li>
-                  <li><a href="#">Fastfood</a></li>
-                  <li><a href="#">Fresh Onion</a></li>
-                  <li><a href="#">Papayaya &amp; Crisps</a></li>
-                  <li><a href="#">Oatmeal</a></li>
-                  <li><a href="#">Fresh Bananas</a></li>
+                  { left}
                 </ul>
               </div>
             </div>
@@ -57,17 +67,10 @@ const handleClick = () =>{
                   </div>
                 </div>
               </div>
-              <div className="hero__item set-bg" data-setbg="img/hero/banner.jpg">
-                <div className="hero__text">
-                  <span>FRUIT FRESH</span>
-                  <h2>Vegetable <br />100% Organic</h2>
-                  <p>Free Pickup and Delivery Available</p>
-                  <a href="#" className="primary-btn">SHOP NOW</a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
+      </section>
     )
 }
 export default Section

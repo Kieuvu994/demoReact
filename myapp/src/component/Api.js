@@ -5,7 +5,7 @@ import SnackbarUtils from "./SnackbarUtils";
 //const token = getToken();
 //const sectionID = getEmlID();
 const instance = axios.create({
-    baseURL: "https://provinces.open-api.vn/api/",
+    baseURL: "http://localhost:8080/vu-api/api/",
     headers: {
         //'Authorization': `Bearer ${token}`,
         'Content-Type': "application/json",
@@ -16,7 +16,9 @@ const instance = axios.create({
 // console.log("tokeeeeeen: " + token);
 // console.log("sectionID: " + sectionID);
 instance.interceptors.request.use((request) => {
+    console.log("re",request)
     return request;
+
 }, (error) => {
     return Promise.reject(error);
 });

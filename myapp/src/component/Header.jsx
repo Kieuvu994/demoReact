@@ -1,6 +1,6 @@
 //import '../css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../css/header.css';
+import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React, { useState, useEffect } from "react";
 const Header =()=> {
@@ -64,7 +64,14 @@ const Header =()=> {
           <div className="row">
             <div className="col-lg-3">
               <div className="header__logo">
-                <a href="./"><img src="img/logo.png" alt="" /></a>
+                <a href="./"
+                onClick={()=>{
+                  localStorage.setItem("cate_type","");
+                  localStorage.setItem("cate_id","");
+                  localStorage.setItem("cate_search","");
+
+                }}
+                ><img src="img/logo.png" alt="" /></a>
               </div>
             </div>
             <div className="col-lg-6">
@@ -72,6 +79,7 @@ const Header =()=> {
                 <ul>
                   <li className="active"><a href="./">Home</a></li>
                   <li><a href="./detail">Category</a></li>
+                  <li><a href="./cart">Cart</a></li>
                   <li><a href="./pay">Pay</a></li>
                 </ul>
               </nav>
