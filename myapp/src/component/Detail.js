@@ -1,5 +1,73 @@
-import React from "react";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import React,{ useState,useEffect } from 'react';
+import Api from './Api'
+
 export default function Detail(props) {
+  const [first,setfirst] =useState(true)
+  const [data, setdata] = useState([]);
+  const [size, setsize ]= useState("S");
+  const [Sizes,setSizes] = useState([]);
+  const [quality, setquality] = useState(1);
+  useEffect(() => {
+    
+    if(first) {
+      fetchData();
+    }
+    else setfirst(false)
+  }, [])
+
+
+
+
+  const fetchData = async () => {
+    const params = {
+      category_id: localStorage.getItem("category_id")
+    };
+    //const datax = await dispatch(getApiCategory(params));
+    await Api.get("product",
+      {
+        params: params
+      }).then((res) => {
+        console.log("product 0 ", res.data.data[0]);
+        setdata(res.data.data[0]);
+      })
+     
+    await Api.get("code",
+          {params: {
+            CodeName: "size_pro",
+          }
+          }).then((res)=>{
+           console.log("code size",res.data.data);
+           setSizes(res.data.data);
+         })
+  }
+  const sizelist = Sizes.map((e)=>
+    <option value={e.code}>{e.code}</option>
+    );
+
+    function saveCategory(){
+      let cur = localStorage.getItem("CategoryData")? JSON.parse(localStorage.getItem("CategoryData")): [];
+      let stu = {
+        id:data.id
+        ,size:size
+        ,quality:quality
+        ,price:   data.priceSale
+        ,picture: data.picture
+        ,Name:    data.Name
+      };
+      console.log("stu",stu);
+
+      cur.push(stu);
+      // if (cur == null) cur = [cate]; 
+      // else cur.push(cate);
+      //else cate.push();
+      localStorage.setItem("CategoryData",JSON.stringify(cur));
+      
+  
+    }
+
     return (
 
           <section className="product-details spad">
@@ -10,29 +78,14 @@ export default function Detail(props) {
                     <div className="product__details__pic__item">
                       <img
                         className="product__details__pic__item--large"
-                        src="img/product/details/product-details-1.jpg"
+                        src={data.picture? data.picture: "img/product/details/product-details-1.jpg"}
                         alt
                       />
                     </div>
                     <div className="product__details__pic__slider owl-carousel">
                       <img
                         data-imgbigurl="img/product/details/product-details-2.jpg"
-                        src="img/product/details/thumb-1.jpg"
-                        alt
-                      />
-                      <img
-                        data-imgbigurl="img/product/details/product-details-3.jpg"
-                        src="img/product/details/thumb-2.jpg"
-                        alt
-                      />
-                      <img
-                        data-imgbigurl="img/product/details/product-details-5.jpg"
-                        src="img/product/details/thumb-3.jpg"
-                        alt
-                      />
-                      <img
-                        data-imgbigurl="img/product/details/product-details-4.jpg"
-                        src="img/product/details/thumb-4.jpg"
+                        src={data.picture1? data.picture1: data.picture? data.picture: "img/product/details/thumb-1.jpg"}
                         alt
                       />
                     </div>
@@ -40,30 +93,38 @@ export default function Detail(props) {
                 </div>
                 <div className="col-lg-6 col-md-6">
                   <div className="product__details__text">
-                    <h3>Vetgetable’s Package</h3>
+                    <h3>{data.Name}</h3>
                     <div className="product__details__rating">
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star-half-o" />
-                      <span>(18 reviews)</span>
+                      <i className="bi bi-star-fill" />
+                      <i className="bi bi-star-fill" />
+                      <i className="bi bi-star-fill" />
+                      <i className="bi bi-star-fill" />
+                      <i className="bi bi-star-half" />
+                      
                     </div>
-                    <div className="product__details__price">$50.00</div>
+                    <div className="product__details__price">${data.priceSale}</div>
+                    <p className="text-decoration-line-through">${data.price}</p>
                     <p>
-                      Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                      Vestibulum ac diam sit amet quam vehicula elementum sed sit amet
-                      dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam
-                      vehicula elementum sed sit amet dui. Proin eget tortor risus.
+                      {data.desc}
                     </p>
+                    <b className="d-block"> Size: 
+                      <select className="arrow_carrot" onChange={(newvalue)=>setsize(newvalue.target.value)}>
+                        {sizelist}
+                      </select>
+                    </b>
+
                     <div className="product__details__quantity">
                       <div className="quantity">
                         <div className="pro-qty">
-                          <input type="text" defaultValue={1} />
+                          <span className="dec qtybtn" onClick={()=>{quality>1? setquality(quality-1):setquality(1)}}>-</span>
+                        <input type="int" className="is-valid " value={quality} onChange={(newvalue) => setquality(newvalue.target.value)}/>
+                        <span className="dec qtybtn" onClick={()=>{setquality(quality+1)}}>+</span>
                         </div>
                       </div>
                     </div>
-                    <a href="#" className="primary-btn">
+                    <a href="./cart" className="primary-btn"
+                    onClick={saveCategory}
+                    >
                       ADD TO CARD
                     </a>
                     <a href="#" className="heart-icon">
@@ -71,31 +132,19 @@ export default function Detail(props) {
                     </a>
                     <ul>
                       <li>
-                        <b>Availability</b> <span>In Stock</span>
-                      </li>
-                      <li>
-                        <b>Shipping</b>{' '}
-                        <span>
-                          01 day shipping. <samp>Free pickup today</samp>
-                        </span>
-                      </li>
-                      <li>
-                        <b>Weight</b> <span>0.5 kg</span>
-                      </li>
-                      <li>
                         <b>Share on</b>
                         <div className="share">
                           <a href="#">
-                            <i className="fa fa-facebook" />
+                            <i className="bi bi-facebook" />
                           </a>
                           <a href="#">
-                            <i className="fa fa-twitter" />
+                            <i className="bi bi-twitter" />
                           </a>
                           <a href="#">
-                            <i className="fa fa-instagram" />
+                            <i className="bi bi-instagram" />
                           </a>
                           <a href="#">
-                            <i className="fa fa-pinterest" />
+                            <i className="bi bi-pinterest" />
                           </a>
                         </div>
                       </li>
@@ -116,108 +165,14 @@ export default function Detail(props) {
                           Description
                         </a>
                       </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          data-toggle="tab"
-                          href="#tabs-2"
-                          role="tab"
-                          aria-selected="false"
-                        >
-                          Information
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          data-toggle="tab"
-                          href="#tabs-3"
-                          role="tab"
-                          aria-selected="false"
-                        >
-                          Reviews <span>(1)</span>
-                        </a>
-                      </li>
                     </ul>
                     <div className="tab-content">
                       <div className="tab-pane active" id="tabs-1" role="tabpanel">
                         <div className="product__details__tab__desc">
                           <h6>Products Infomation</h6>
                           <p>
-                            Vestibulum ac diam sit amet quam vehicula elementum sed sit
-                            amet dui. Pellentesque in ipsum id orci porta dapibus. Proin
-                            eget tortor risus. Vivamus suscipit tortor eget felis
-                            porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-                            elementum sed sit amet dui. Donec rutrum congue leo eget
-                            malesuada. Vivamus suscipit tortor eget felis porttitor
-                            volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-                            porttitor at sem. Praesent sapien massa, convallis a
-                            pellentesque nec, egestas non nisi. Vestibulum ac diam sit
-                            amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                            ipsum primis in faucibus orci luctus et ultrices posuere
-                            cubilia Curae; Donec velit neque, auctor sit amet aliquam vel,
-                            ullamcorper sit amet ligula. Proin eget tortor risus.
-                          </p>
-                          <p>
-                            Praesent sapien massa, convallis a pellentesque nec, egestas
-                            non nisi. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Mauris blandit aliquet elit, eget tincidunt nibh
-                            pulvinar a. Cras ultricies ligula sed magna dictum porta. Cras
-                            ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                            nibh. Mauris blandit aliquet elit, eget tincidunt nibh
-                            pulvinar a. Vestibulum ac diam sit amet quam vehicula
-                            elementum sed sit amet dui. Sed porttitor lectus nibh.
-                            Vestibulum ac diam sit amet quam vehicula elementum sed sit
-                            amet dui. Proin eget tortor risus.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="tab-pane" id="tabs-2" role="tabpanel">
-                        <div className="product__details__tab__desc">
-                          <h6>Products Infomation</h6>
-                          <p>
-                            Vestibulum ac diam sit amet quam vehicula elementum sed sit
-                            amet dui. Pellentesque in ipsum id orci porta dapibus. Proin
-                            eget tortor risus. Vivamus suscipit tortor eget felis
-                            porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-                            elementum sed sit amet dui. Donec rutrum congue leo eget
-                            malesuada. Vivamus suscipit tortor eget felis porttitor
-                            volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-                            porttitor at sem. Praesent sapien massa, convallis a
-                            pellentesque nec, egestas non nisi. Vestibulum ac diam sit
-                            amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                            ipsum primis in faucibus orci luctus et ultrices posuere
-                            cubilia Curae; Donec velit neque, auctor sit amet aliquam vel,
-                            ullamcorper sit amet ligula. Proin eget tortor risus.
-                          </p>
-                          <p>
-                            Praesent sapien massa, convallis a pellentesque nec, egestas
-                            non nisi. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Mauris blandit aliquet elit, eget tincidunt nibh
-                            pulvinar a. Cras ultricies ligula sed magna dictum porta. Cras
-                            ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                            nibh. Mauris blandit aliquet elit, eget tincidunt nibh
-                            pulvinar a.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="tab-pane" id="tabs-3" role="tabpanel">
-                        <div className="product__details__tab__desc">
-                          <h6>Products Infomation</h6>
-                          <p>
-                            Vestibulum ac diam sit amet quam vehicula elementum sed sit
-                            amet dui. Pellentesque in ipsum id orci porta dapibus. Proin
-                            eget tortor risus. Vivamus suscipit tortor eget felis
-                            porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-                            elementum sed sit amet dui. Donec rutrum congue leo eget
-                            malesuada. Vivamus suscipit tortor eget felis porttitor
-                            volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-                            porttitor at sem. Praesent sapien massa, convallis a
-                            pellentesque nec, egestas non nisi. Vestibulum ac diam sit
-                            amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                            ipsum primis in faucibus orci luctus et ultrices posuere
-                            cubilia Curae; Donec velit neque, auctor sit amet aliquam vel,
-                            ullamcorper sit amet ligula. Proin eget tortor risus.
+                           {data.content}
+                          
                           </p>
                         </div>
                       </div>

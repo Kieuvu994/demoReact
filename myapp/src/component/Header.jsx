@@ -1,6 +1,5 @@
 //import '../css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React, { useState, useEffect } from "react";
 const Header =()=> {
@@ -69,7 +68,7 @@ const Header =()=> {
                   localStorage.setItem("cate_type","");
                   localStorage.setItem("cate_id","");
                   localStorage.setItem("cate_search","");
-
+                  localStorage.setItem("type_name","");
                 }}
                 ><img src="img/logo.png" alt="" /></a>
               </div>

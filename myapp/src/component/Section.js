@@ -1,6 +1,6 @@
 //import '../css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../css/style.css';
+//import '../css/style.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React,{ useState,useEffect } from 'react';
 import Api from './Api'
@@ -28,7 +28,10 @@ const Section = () => {
      })
    }
    
-   const left = data.map((e)=> <li><a href="./" onClick={()=>{localStorage.setItem("cate_type",e.code)}}>{e.param_meaning}</a></li>);
+   const left = data.map((e)=> <li><a href="./" onClick={()=>{
+    localStorage.setItem("cate_type",e.code)
+    localStorage.setItem("type_name",e.param_meaning)
+  }}>{e.param_meaning}</a></li>);
 
     return (
       <section className="hero hero-normal">
@@ -41,6 +44,12 @@ const Section = () => {
                   <span></span>
                 </div>
                 <ul style={{display: handLeft?'block':'none'}}>
+                <li><a href="./" onClick={()=>{
+                  localStorage.setItem("cate_type","");
+                  localStorage.setItem("cate_id","");
+                  localStorage.setItem("cate_search","");
+                  localStorage.setItem("type_name","");
+                  }}>View All</a></li>
                   { left}
                 </ul>
               </div>
