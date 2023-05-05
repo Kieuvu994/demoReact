@@ -94,8 +94,8 @@ const item = data.map((e)=> (
           </div>)
 );
 function image(e){
-  let imag = "url(img/featured/feature-1.jpg)";
-  if(e!=null) imag="url("+e+")";
+  let imag = "url(img/OIP.jpg)";
+  if(e!=null&e!="" ) imag="url("+e+")";
   return {backgroundImage : imag}
 }
 

@@ -5,7 +5,7 @@ import Pay from './component/Pay';
 import Header from './component/Header';
 import Section from './component/Section';
 import Cart from './component/Cart'
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import React from 'react';
 function App() {
 

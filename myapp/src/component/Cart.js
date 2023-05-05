@@ -8,7 +8,7 @@ export default function Pay(props) {
   const [first, setfirst] = useState(true)
   const [data, setdata] = useState([]);
   const [total, settotal] = useState(0);
-  const list = JSON.parse(localStorage.getItem("CategoryData"))
+  const list = localStorage.getItem("CategoryData")? JSON.parse(localStorage.getItem("CategoryData")):[]
   console.log("CategoryData ", list)
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Pay(props) {
       <tr>
         {/* {setva(e.quality)} */}
         <td className="shoping__cart__item">
-          <img src={e.picture ? e.picture : "img/cart/cart-1.jpg"} alt />
+          <img src={(e.picture&&e.picture!="")? e.picture : "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/April2023/thumbDSC05568_copy.jpg"} alt />
           <h5>{e.Name}</h5>
         </td>
         <td className="shoping__cart__price">${e.price}</td>

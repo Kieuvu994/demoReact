@@ -14,7 +14,7 @@ export default function Pay(props) {
   const [Note, setNote] = useState("");
   const [Sex, setSex] = useState("Nam");
   const [Status, setStatus] = useState("Waiting");
-  const [Total, SetTotal] = useState(0);
+  const [pay ,setpay] =useState(false);
   const insertuser =async ()=>{
 
         let bodyparam=[{
@@ -31,11 +31,12 @@ export default function Pay(props) {
                   }
                   ).then((e) => {
                       console.log(e)
-                      localStorage.setItem("user",Phone);
-                      insertoder();
+                      // localStorage.setItem("user",Phone);
+                      // insertoder();
                   })
       }
       const insertoder =async ()=>{
+        if(localStorage.getItem("Total")!=null)
         //let bodyparam=JSON.parse(localStorage.getItem("order"))
         await Api.post("order", {
                       "Total": localStorage.getItem("Total"),
@@ -44,16 +45,20 @@ export default function Pay(props) {
                   }
                   ).then((e) => {
                       console.log(e)
-                  })
-      }
-  const dt = JSON.parse(localStorage.getItem("order"));
-  const order = dt.map(
+                  })}
+
+  const dt = localStorage.getItem("order")? JSON.parse(localStorage.getItem("order")):[];
+  const order =dt!=[]? dt.map(
     (e)=><li>
     {e.Name} <span>${e.quality*e.price}</span>
   </li>)
+  :<></>
+return (
+<> 
 
-  return (
-    <section className="checkout spad">
+<a href="./" className="header__menu" style={pay? {}: {display: 'none'}}> Return HomePage </a>
+
+    <section className="checkout spad" style={pay? {display: 'none'}: {}}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -139,7 +144,8 @@ export default function Pay(props) {
                   />
                 </div>
               </div>
-              <div className="col-lg-4 col-md-6">
+
+              <div dis className="col-lg-4 col-md-6"  >
                 <div className="checkout__order">
                   <h4>Your Order</h4>
                   <div className="checkout__order__products">
@@ -172,31 +178,31 @@ export default function Pay(props) {
                           .create({
                             purchase_units: [
                               {
-                                description: "test code",//dt.reduce((nw,cur)=>nw+" - "+cur.Name,""),
+                                // description: "test code",//dt.reduce((nw,cur)=>nw+" - "+cur.Name,""),
                                 amount: {
                                     currency_code: "USD",
                                     value: localStorage.getItem("Total"),
                                 },
                               },
                             ],
-                            application_context:{
-                              shipping_preference: "noshiping",
-                            }
+                            // application_context:{
+                            //   shipping_preference: "noshiping",
+                            // }
                           })
                           .then((orderId) => {
                             insertuser();
                               return orderId;
                           });
                     }}
-                    onApprove={ (data, actions)=> {
-                      alert("completed");
-
+                    onApprove={(data, actions)=> {
                       return actions.order.capture().then(function (detail) {
                         alert("completed");
-
+                        
+                        localStorage.setItem("Subtotal",0);
+                        localStorage.setItem("Total",0);
+                        setpay(true);
                       });
                   }}
-                    
                     />
                   </PayPalScriptProvider>
                   <button type="submit" className="site-btn">
@@ -204,11 +210,12 @@ export default function Pay(props) {
                   </button>
                 </div>
               </div>
+
             </div>
           </form>
         </div>
       </div>
     </section>
-
+    </>   
   )
 }
