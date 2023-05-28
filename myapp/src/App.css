@@ -1,3 +1,8 @@
+:root{
+  --menuWidth: 150px;
+  --headerHeight: 70px;
+}
+
 *{
   width: 100%;
   margin: 0;
@@ -5,6 +10,68 @@
   font-size: 20px;
   font-weight: 500;
 }
+.container{
+  padding-right: var(--menuWidth);
+  left:0;
+  width: 100%;
+}
+.left{
+  height: 100%;
+  position: fixed;
+  left:0;
+  width: var(--menuWidth); 
+}
+.content{
+  width: 100%;
+  position: relative;
+}
+.header{
+  position: fixed;
+  border-bottom: black ;
+  display: flex;
+  padding-top: 15px;
+  width: 80%;
+  justify-content: space-evenly;
+
+}
+
+.header_list{
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1;
+}
+.flex1{
+  flex: 3 ;
+ }
+ .flex2{
+   flex: 1 ;
+ }
+.header_item{
+  width: 5px;
+  flex-wrap: wrap;
+  border-color: rgb(255, 0, 43);
+}
+
+.header_item a,button a{
+  color: black;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+/* menu */
+button{
+  display: inline;
+  margin: 0 auto;
+}
+
+
+
+.body{
+  padding-top: var(--headerHeight);
+}
+
+
+
+/* 
 .flexcore{
   position: fixed;
 }
@@ -42,8 +109,6 @@
 .contact-list li{
   margin: 5px 10px;
   list-style: none;
-  
-
 }
 .bar{
   width: 30px;
@@ -54,10 +119,4 @@
 a{
   color: black;
   text-decoration: none;
-}
-.vohang{
-  width: 30px;
-  height: 20px;
-  background-image: none;
-  opacity:0.6;
-}
+} */
