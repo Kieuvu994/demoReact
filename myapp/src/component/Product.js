@@ -1,9 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect , useState} from 'react';
 import Api from '../Api';
 import DataGridStyle from './DataGridStyle'
+import { Clear } from "@material-ui/icons";
+import {IconButton, MenuItem ,TextField, Box} from '@mui/material';
+import SimpleFrame from './SimpleFrame'
 // Company
 // Material
 // Name
@@ -56,31 +58,6 @@ const columns = [
     width: 110,
     editable: true,
   },
-
-  
- 
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 11, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 12, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 13, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 14, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 15, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 16, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 17, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 18, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 19, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
 export default function Product() {
@@ -88,6 +65,7 @@ export default function Product() {
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
   const [count,setCount] = useState(0)
+  const [option,setOption] =useState([])
   useEffect(() => {
     console.log("API...");
     Api.get("Product", {
@@ -101,13 +79,105 @@ export default function Product() {
         setCount(res.data.count)
       })
   }, [category , type])
+  useEffect(() => {
+    console.log("API option...");
+    Api.get("code", {
+        params: {
+            CodeName: 'typ_pro',
+        }
+      }).then((res) => {
+        console.log("op in ", res.data);
+        setOption(res.data.data);
+      })
+  }, [])
     
-
+  const filterBox = (
+    <>
+        
+        <Box
+            component="form"
+            sx={{
+                p: 2,
+                border: 1,
+                borderColor: "rgba(192,192,192,0.2)",
+                backgroundColor: "rgb(241,241,241)",
+                display: 'flex',
+                justifyContent: "stretch",
+                alignItems: 'center',
+                borderRadius: 2,
+                height: 50,
+            }}
+            noValidate
+            autoComplete="off"
+         >
+            <TextField
+                value={type}
+                id="SearchSite"
+                select
+                label="Site"
+                defaultValue="all"
+                style={{ width: 130 }}
+                onChange={(newValue) => setType(newValue.target.value)}
+                size="small"
+                sx={{
+                    marginRight: 2,
+                "& .MuiOutlinedInput-root": {
+                    backgroundColor: "white",
+                    height:"37px"
+                },
+                }}
+            >
+                <MenuItem value="all">All</MenuItem>
+                {option.map(field => {
+                return (
+                    <MenuItem key={field.code} value={field.code}>{field.param_meaning}</MenuItem>
+                )
+                })}
+            </TextField>
+            <TextField
+                sx={{
+                marginRight: 2,
+                input: {
+                    color: "black",
+                    background: "white",
+                    height:"20px"
+                },
+                }}
+                label="Table Name/Desc"
+                id="dataSearch"
+                size="small"
+                value={category}
+                style={{ width: 200, backgroundColor:'white' }}
+                onChange={(newValue) => setCategory(newValue.target.value)}
+                InputProps={{
+                endAdornment: (
+                    <IconButton
+                        style={{background: "white"}}
+                        color="default"
+                        size="small"
+                        sx={{ visibility: category ? "visible" : "hidden" }}
+                        onClick={()=>setCategory("")}
+                    >
+                        <Clear fontSize="small"/>
+                    </IconButton>
+                ),
+                }}
+            />
+            {/* <M990100030_03 ref={documentDetailsRef} onUpdated={searchData}/>
+            <M990101010DownFileDialog ref={downFileDialogRef} /> */}
+        </Box>
+    </>
+);
       
 
-
+// const childRef = useRef(); 
   return (
-    <Box sx={{  width: '100%' }}>
+    <SimpleFrame 
+        filter={filterBox}
+        syscode="Site List"
+        // onSearch={}
+        // onAdd ={() => childRef.current.handleClickOpen()}
+    >
       <DataGrid
         pagination
         paginationMode="server"
@@ -127,6 +197,6 @@ export default function Product() {
         checkboxSelection
         disableRowSelectionOnClick
       />
-    </Box>
+      </SimpleFrame>
   );
 }
