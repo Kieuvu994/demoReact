@@ -4,7 +4,7 @@ import { useEffect , useState} from 'react';
 import Api from '../Api';
 import DataGridStyle from './DataGridStyle'
 import { Clear } from "@material-ui/icons";
-import {IconButton, MenuItem ,TextField, Box, FormControl, InputLabel, NativeSelect} from '@mui/material';
+import {IconButton, MenuItem ,TextField, Box, FormControl, InputLabel, NativeSelect, FormHelperText, Select} from '@mui/material';
 
 // Company
 // Material
@@ -172,24 +172,25 @@ export default function Product() {
 // const childRef = useRef(); 
   return (
  <>
-<Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-          Age
-        </InputLabel>
-        <NativeSelect
-          defaultValue={30}
-          inputProps={{
-            name: 'age',
-            id: 'uncontrolled-native',
-          }}
+<FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-readonly-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-readonly-label"
+          id="demo-simple-select-readonly"
+          value={type}
+          label="Age"
+          onChange={(newValue) => setType(newValue.target.value)}
+          inputProps={{ readOnly: true }}
         >
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
-        </NativeSelect>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+        <FormHelperText>Read only</FormHelperText>
       </FormControl>
-    </Box>
  <Box sx={{  width: '100%' }}>
       <DataGrid
         pagination
