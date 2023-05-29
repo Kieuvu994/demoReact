@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect , useState} from 'react';
+import { useEffect , useState , useRef} from 'react';
 import Api from '../Api';
 import DataGridStyle from './DataGridStyle'
-import { Clear } from "@material-ui/icons";
-import {IconButton, MenuItem ,TextField, Box, FormControl, InputLabel, NativeSelect, FormHelperText, Select} from '@mui/material';
-
+import { Clear, Height } from "@mui/icons-material";
+import {Input, InputAdornment ,TextField, Box, FormControl, FormHelperText, FilledInput  , Button} from '@mui/material';
+import Product_02 from './Product_02'
 // Company
 // Material
 // Name
@@ -21,31 +21,39 @@ const columns = [
   {
     field: 'Name',
     headerName: 'Name',
-    width: 350,
+    width: 300,
     editable: true,
   },
   {
 
     field: 'Company',
     headerName: 'Company',
-    width: 180,
+    width: 150,
     editable: true,
   },
   {
     field: 'Material',
     headerName: 'Material',
-    width: 180,
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'pricePur',
+    headerName: 'Purchase Price',
+    width: 110,
+    type: 'number',
     editable: true,
   },
   {
     field: 'price',
-    headerName: 'Price',
-    width: 180,
+    headerName: 'Init Price',
+    width: 110,
     editable: true,
   },
+  
   {
     field: 'priceSale',
-    headerName: 'Sale',
+    headerName: 'Discount Price',
     type: 'number',
     width: 110,
     editable: true,
@@ -90,111 +98,61 @@ export default function Product() {
         setOption(res.data.data);
       })
   }, [])
-    
-  const filterBox = (
-    <>
-        <Box
-            component="form"
-            sx={{
-                p: 2,
-                border: 1,
-                borderColor: "rgba(192,192,192,0.2)",
-                backgroundColor: "rgb(241,241,241)",
-                display: 'flex',
-                justifyContent: "stretch",
-                alignItems: 'center',
-                borderRadius: 2,
-                height: 50,
-            }}
-            noValidate
-            autoComplete="off"
-         >
-            <TextField
-                value={type}
-                id="SearchSite"
-                select
-                label="Site"
-                defaultValue="all"
-                style={{ width: 130 }}
-                onChange={(newValue) => setType(newValue.target.value)}
-                size="small"
-                sx={{
-                    marginRight: 2,
-                "& .MuiOutlinedInput-root": {
-                    backgroundColor: "white",
-                    height:"37px"
-                },
-                }}
-            >
-                <MenuItem value="all">All</MenuItem>
-                {option.map(field => {
-                return (
-                    <MenuItem key={field.code} value={field.code}>{field.param_meaning}</MenuItem>
-                )
-                })}
-            </TextField>
-            <TextField
-                sx={{
-                marginRight: 2,
-                input: {
-                    color: "black",
-                    background: "white",
-                    height:"20px"
-                },
-                }}
-                label="Table Name/Desc"
-                id="dataSearch"
-                size="small"
-                value={category}
-                style={{ width: 200, backgroundColor:'white' }}
-                onChange={(newValue) => setCategory(newValue.target.value)}
-                InputProps={{
-                endAdornment: (
-                    <IconButton
-                        style={{background: "white"}}
-                        color="default"
-                        size="small"
-                        sx={{ visibility: category ? "visible" : "hidden" }}
-                        onClick={()=>setCategory("")}
-                    >
-                        <Clear fontSize="small"/>
-                    </IconButton>
-                ),
-                }}
-            />
-            {/* <M990100030_03 ref={documentDetailsRef} onUpdated={searchData}/>
-            <M990101010DownFileDialog ref={downFileDialogRef} /> */}
-        </Box>
-    </>
-);
       
+  const childRef = useRef(); 
 
 // const childRef = useRef(); 
   return (
  <>
-<FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-readonly-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-readonly-label"
-          id="demo-simple-select-readonly"
-          value={type}
-          label="Age"
+<Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 2, width: '35ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div style={{display:'block'}}>
+        <TextField 
+          id="standard-select-currency-native"
+          select
+          defaultValue={type}
           onChange={(newValue) => setType(newValue.target.value)}
-          inputProps={{ readOnly: true }}
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Please select Type Product"
+          variant="standard"
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Read only</FormHelperText>
-      </FormControl>
+          <option value="">None</option>
+          {option.map((op) => (
+            <option key={op.code} value={op.code}>
+              {op.param_meaning}
+            </option>
+          ))}
+        </TextField>
+        <TextField 
+          label="Search"
+          id="standard-start-adornment"
+          defaultValue={category}
+          helperText="Please select Type Product"
+          onChange={(newValue) => setCategory(newValue.target.value)}
+          InputProps={{
+            'aria-label': 'weight',
+          }}
+          variant="standard"
+        />
+           <Button  variant='contained' color='primary' style={{display:'block', height:'40px', width:'40px'}}
+            onClick={() => childRef.current.handleClickOpen()}>Add
+         </Button>
+      </div>
+    </Box>    
+ 
+    <Product_02 ref={childRef}/>                        
+
  <Box sx={{  width: '100%' }}>
       <DataGrid
         pagination
-        paginationMode="server"
         rows={data}
         getRowId={(r) =>(r.id)}
         columns={columns}
@@ -206,7 +164,7 @@ export default function Product() {
             },
           },
         }}
-        rowCount={count}
+        //rowCount={count}
         pageSizeOptions={[15,30,50]}
         checkboxSelection
         disableRowSelectionOnClick
@@ -215,3 +173,17 @@ export default function Product() {
    </> 
   );
 }
+
+
+// Name: Name,
+//         Company: Company,
+//         price_in: price_in,
+//         price_out: price_out,
+//         price_sale: price_sale,
+//         type: type,
+//         desc: desc,
+//         content: content,
+//         picture: picture,
+//         picture1: picture1,
+//         Material: Material,
+//         quantity: quantity,

@@ -1,6 +1,6 @@
 import './App.css';
 import Product from './component/Product';
-import Detail from './component/Detail';
+import Order from './component/Orders';
 import Pay from './component/Pay';
 import Copyright from './component/Copyright'
 import { Routes, Route, Link } from 'react-router-dom';
@@ -14,9 +14,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   const buttons = [
-    <Button key="Home"><Link to="/Copyright"> Home </Link></Button>,
-    <Button key="Order"><Link to="/Copyright"> Order </Link></Button>,
-    <Button key="Product"><Link to="/Copyright"> Copyright </Link></Button>,
+    <Button key="Order"><Link to="/Orders"> Order </Link></Button>,
+    <Button key="Product"><Link to="/Product"> Product </Link></Button>,
+    <Button key="Copyright"><Link to="/Copyright"> Copyright </Link></Button>,
   ];
   return (
     <div className='container'>
@@ -45,7 +45,7 @@ function App() {
         <div className='body'>
           <Routes>
             <Route path="/Product" element={<Product />} />
-            <Route path="/detail" element={<Detail />} />
+            <Route path="/Orders" element={<Order />} />
             <Route path="/Copyright" element={<Copyright />} />
           </Routes>
         </div>
