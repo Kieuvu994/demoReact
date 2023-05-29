@@ -22,7 +22,7 @@ const SimpleFrame = props => {
         if (event.keyCode === 13 && event.shiftKey) {
             saveBtnRef.current.click()
         }
-    }, []);
+    }, []); 
 
     useEffect(() => {
         // attach the event listener

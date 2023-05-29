@@ -4,8 +4,8 @@ import { useEffect , useState} from 'react';
 import Api from '../Api';
 import DataGridStyle from './DataGridStyle'
 import { Clear } from "@material-ui/icons";
-import {IconButton, MenuItem ,TextField, Box} from '@mui/material';
-import SimpleFrame from './SimpleFrame'
+import {IconButton, MenuItem ,TextField, Box, FormControl, InputLabel, NativeSelect} from '@mui/material';
+
 // Company
 // Material
 // Name
@@ -93,7 +93,6 @@ export default function Product() {
     
   const filterBox = (
     <>
-        
         <Box
             component="form"
             sx={{
@@ -172,12 +171,26 @@ export default function Product() {
 
 // const childRef = useRef(); 
   return (
-    <SimpleFrame 
-        filter={filterBox}
-        syscode="Site List"
-        // onSearch={}
-        // onAdd ={() => childRef.current.handleClickOpen()}
-    >
+ <>
+<Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Age
+        </InputLabel>
+        <NativeSelect
+          defaultValue={30}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={10}>Ten</option>
+          <option value={20}>Twenty</option>
+          <option value={30}>Thirty</option>
+        </NativeSelect>
+      </FormControl>
+    </Box>
+ <Box sx={{  width: '100%' }}>
       <DataGrid
         pagination
         paginationMode="server"
@@ -197,6 +210,7 @@ export default function Product() {
         checkboxSelection
         disableRowSelectionOnClick
       />
-      </SimpleFrame>
+      </Box>
+   </> 
   );
 }
