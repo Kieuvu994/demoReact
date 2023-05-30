@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@material-ui/icons": "^4.11.3",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/x-data-grid-generator": "^6.5.0",
-    "axios": "^1.4.0"
-  }
-}

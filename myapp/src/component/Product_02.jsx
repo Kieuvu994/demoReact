@@ -75,9 +75,9 @@ export default forwardRef((props, ref) => {
         ).catch(
             (err)=>console.log(err)
         ).finally(
-            setOpen(false)
+            props.onUpdated()
         )
-
+        setOpen(false)
      }
 
     return (

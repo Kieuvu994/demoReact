@@ -25,9 +25,11 @@ export default forwardRef((props, ref) => {
     const [quantity, setquantity] = useState(0);
     const [id, setid] = useState(0);
     const [dialogToggle, setDialogToggle] = useState(false);
+    const [par, setPar]=useState([])
     const openDialog = val => {
-        //setSelectedValue('')
+
         setDialogToggle(true)
+        setPar(val)
         setName(val.Name)
         setCompany(val.Company)
         setprice_in(val.pricePur)
@@ -45,6 +47,8 @@ export default forwardRef((props, ref) => {
 
         console.log(val)
     }
+
+
     useImperativeHandle(ref, () => ({
         openDialog
     }))
@@ -64,7 +68,6 @@ export default forwardRef((props, ref) => {
             setOptionType(res.data.data)
             console.log("setOptionType")
         })
-
     }, [])
 
 
@@ -91,9 +94,10 @@ export default forwardRef((props, ref) => {
         ).catch(
             (err)=>console.log(err)
         ).finally(
-            
+            props.onUpdated()
         )
         setDialogToggle(false)
+        
      }
 
     return (
@@ -110,7 +114,7 @@ export default forwardRef((props, ref) => {
                 </DialogTitle>
                 <DialogContent>
                     <TextField
-                        defaultValue={Name}
+                        defaultValue={par.Name}
                         id="setName"
                         label="Name product"
                         style={{ width: 250, marginTop: 10 }}
@@ -127,7 +131,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={Company}
+                        defaultValue={par.Company}
                         id="setCompany"
                         label="Name Company"
                         style={{ width: 250, marginTop: 10 }}
@@ -146,7 +150,7 @@ export default forwardRef((props, ref) => {
                     <TextField
                         id="settype"
                         select
-                        defaultValue={type}
+                        defaultValue={par.type}
                         style={{ width: 250, marginTop: 10 , marginRight: 15 }}
                         onChange={(newValue) => settype(newValue.target.value)}
                         SelectProps={{
@@ -164,7 +168,7 @@ export default forwardRef((props, ref) => {
 
 
                     <TextField
-                        defaultValue={price_in}
+                        defaultValue={par.pricePur}
                         id="price_in"
                         label="Purchase Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -182,7 +186,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={price_out}
+                        defaultValue={par.price}
                         id="price_out"
                         label="Initial Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -200,7 +204,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={price_sale}
+                        defaultValue={par.priceSale}
                         id="Discount"
                         label="Discount Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -218,7 +222,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={desc}
+                        defaultValue={par.desc}
                         id="desc"
                         label="Decription "
                         style={{ width: 250, marginTop: 10 }}
@@ -235,7 +239,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={content}
+                        defaultValue={par.content}
                         id="content"
                         label="Content "
                         style={{ width: 250, marginTop: 10 }}
@@ -252,7 +256,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={picture}
+                        defaultValue={par.picture}
                         id="picture"
                         label="Link Picture"
                         style={{ width: 250, marginTop: 10 }}
@@ -269,7 +273,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={picture1}
+                        defaultValue={par.picture1}
                         id="picture1"
                         label="Link Picture"
                         style={{ width: 250, marginTop: 10 }}
@@ -286,7 +290,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={Material}
+                        defaultValue={par.Material}
                         id="Material"
                         label="Name Material "
                         style={{ width: 250, marginTop: 10 }}
@@ -304,7 +308,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={quantity}
+                        defaultValue={par.quantity}
                         id="quantity"
                         label="Enter Quantity"
                         style={{ width: 250, marginTop: 10 }}

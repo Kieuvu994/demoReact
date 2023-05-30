@@ -8,7 +8,7 @@ const instance = axios.create({
     baseURL: "http://localhost:8080/vu-cnpm/api/",
     headers: {
         //'Authorization': `Bearer ${token}`,
-        'Content-Type': "application/json",
+        'Content-Type': "application/json; charset=utf-8",
         //'Access-Control-Allow-Origin': '*',
   //      'userID': `${sectionID}`
     }
