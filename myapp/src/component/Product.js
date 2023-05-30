@@ -66,11 +66,10 @@ export default function Product() {
   const [type, setType] = useState('');
   const [count,setCount] = useState(0)
   const [option,setOption] =useState([])
-  const [first,setfirst] =useState(true)
   useEffect(() => {
     console.log("API...");
     searchData()
-  }, [category , type, fetch])
+  }, [category , type])
   
   useEffect(() => {
     console.log("API option...");
@@ -82,9 +81,10 @@ export default function Product() {
       console.log("op in ", res.data);
       setOption(res.data.data);
     })
+    searchData()
   }, [])
   
-  const searchData = async ()=>{
+  const searchData = React.useCallback( async ()=>{
     await  Api.get("Product", {
       params: {
         category: category,
@@ -95,7 +95,7 @@ export default function Product() {
       setdata(res.data.data);
       setCount(res.data.count)
     })
-  }
+  })
   
   const documentDetailsRef = useRef(); 
   const childRef = useRef(); 
