@@ -9,8 +9,8 @@ import Dialog from '@mui/material/Dialog'
 import Api from '../Api';
 
 export default forwardRef((props, ref) => {
-    const [open, setOpen] = useState(false);
-    //const [add, setAdd] = useState(false)
+    
+    //const [add, setAdd] = useState(false)const [open, setOpen] = useState(false);
     const [Name, setName] = useState('');
     const [Company, setCompany] = useState('');
     const [price_in, setprice_in] = useState(0);
@@ -23,20 +23,35 @@ export default forwardRef((props, ref) => {
     const [picture1, setpicture1] = useState('');
     const [Material, setMaterial] = useState('');
     const [quantity, setquantity] = useState(0);
+    const [id, setid] = useState(0);
+    const [dialogToggle, setDialogToggle] = useState(false);
+    const openDialog = val => {
+        //setSelectedValue('')
+        setDialogToggle(true)
+        setName(val.Name)
+        setCompany(val.Company)
+        setprice_in(val.pricePur)
+        setprice_out(val.price)
+        setprice_sale(val.priceSale)
+        settype(val.type)
+        setdesc(val.desc)
+        setcontent(val.content)
+        setpicture(val.picture)
+        setpicture1(val.picture1)
+        setMaterial(val.Material)
+        setquantity(val.quantity)
+        setid(val.id)
+        
 
-
-
-
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-
-
+        console.log(val)
+    }
     useImperativeHandle(ref, () => ({
-        handleClickOpen
+        openDialog
     }))
+
+
+
+
     const [OptionType, setOptionType] = useState([])
 
     //M990100030/sub/Migration
@@ -47,7 +62,7 @@ export default forwardRef((props, ref) => {
             },
         }).then((res) => {
             setOptionType(res.data.data)
-            console.log("api")
+            console.log("setOptionType")
         })
 
     }, [])
@@ -66,31 +81,32 @@ export default forwardRef((props, ref) => {
         picture1: picture1,
         Material: Material,
         quantity: quantity,
+        id: id,
     }
     async function callApi(){
-        await Api.post("Product",param).then(
+        await Api.put("Product",param).then(
             ()=>{
-                console.log(param);
+                console.log("callApi Update",param);
             }
         ).catch(
             (err)=>console.log(err)
         ).finally(
-            setOpen(false)
+            
         )
-
+        setDialogToggle(false)
      }
 
     return (
         <>
             <Dialog
-                open={open}
-                onClose={()=>setOpen(false)}
+                open={dialogToggle}
+                onClose={() => setDialogToggle(false)}
 
             >
                 <DialogTitle sx={{
                     backgroundColor: 'rgba(235,235,235,0.7)'
                 }}>
-                    Create Product
+                    Update Product
                 </DialogTitle>
                 <DialogContent>
                     <TextField
@@ -309,8 +325,8 @@ export default forwardRef((props, ref) => {
                 </DialogContent>
                 <DialogActions>
                     <div style={{ marginRight: 50, marginTop: 10 , display: 'flex'}} >
-                        <Button onClick={()=>setOpen(false)}>Cancel</Button>
-                        <Button onClick={callApi} variant='contained'>Add</Button>
+                        <Button onClick={()=>setDialogToggle(false)}>Cancel</Button>
+                        <Button onClick={callApi} variant='contained'>Update</Button>
                     </div>
                 </DialogActions>
 

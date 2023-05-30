@@ -1,7 +1,7 @@
 import './App.css';
 import Product from './component/Product';
 import Order from './component/Orders';
-import Pay from './component/Pay';
+import StartEditButtonGrid from './component/StartEditButtonGrid';
 import Copyright from './component/Copyright'
 import { Routes, Route, Link } from 'react-router-dom';
 
@@ -38,7 +38,7 @@ function App() {
           <div className='header_list flex2'>
             <Link to='/Product'><i className="bi bi-person" /></Link>
             <Link to='/Product'><i className="bi bi-github" /></Link>
-            <Link to='/'><i className="bi bi-facebook" /></Link>
+            <Link to='/StartEditButtonGrid'><i className="bi bi-facebook" /></Link>
             <Link to='/'><i className="bi bi-twitter" /></Link>
           </div>
         </div>
@@ -47,6 +47,7 @@ function App() {
             <Route path="/Product" element={<Product />} />
             <Route path="/Orders" element={<Order />} />
             <Route path="/Copyright" element={<Copyright />} />
+            <Route path="/StartEditButtonGrid" element={<StartEditButtonGrid />} />
           </Routes>
         </div>
 
