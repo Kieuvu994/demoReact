@@ -1,6 +1,6 @@
 import './App.css';
-import Product from './component/Product';
-import Order from './component/Orders';
+import Product from './component/products';
+import Order from './component/orders';
 import StartEditButtonGrid from './component/StartEditButtonGrid';
 import Copyright from './component/Copyright'
 import { Routes, Route, Link } from 'react-router-dom';

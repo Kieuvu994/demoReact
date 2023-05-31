@@ -6,11 +6,11 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import DialogActions from '@mui/material/DialogActions'
 import Dialog from '@mui/material/Dialog'
-import Api from '../Api';
+import Api from '../../Api';
 
 export default forwardRef((props, ref) => {
-    
-    //const [add, setAdd] = useState(false)const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    //const [add, setAdd] = useState(false)
     const [Name, setName] = useState('');
     const [Company, setCompany] = useState('');
     const [price_in, setprice_in] = useState(0);
@@ -23,39 +23,20 @@ export default forwardRef((props, ref) => {
     const [picture1, setpicture1] = useState('');
     const [Material, setMaterial] = useState('');
     const [quantity, setquantity] = useState(0);
-    const [id, setid] = useState(0);
-    const [dialogToggle, setDialogToggle] = useState(false);
-    const [par, setPar]=useState([])
-    const openDialog = val => {
 
-        setDialogToggle(true)
-        setPar(val)
-        setName(val.Name)
-        setCompany(val.Company)
-        setprice_in(val.pricePur)
-        setprice_out(val.price)
-        setprice_sale(val.priceSale)
-        settype(val.type)
-        setdesc(val.desc)
-        setcontent(val.content)
-        setpicture(val.picture)
-        setpicture1(val.picture1)
-        setMaterial(val.Material)
-        setquantity(val.quantity)
-        setid(val.id)
-        
 
-        console.log(val)
-    }
+
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
 
 
     useImperativeHandle(ref, () => ({
-        openDialog
+        handleClickOpen
     }))
-
-
-
-
     const [OptionType, setOptionType] = useState([])
 
     //M990100030/sub/Migration
@@ -66,8 +47,9 @@ export default forwardRef((props, ref) => {
             },
         }).then((res) => {
             setOptionType(res.data.data)
-            console.log("setOptionType")
+            console.log("api")
         })
+
     }, [])
 
 
@@ -84,37 +66,35 @@ export default forwardRef((props, ref) => {
         picture1: picture1,
         Material: Material,
         quantity: quantity,
-        id: id,
     }
     async function callApi(){
-        await Api.put("Product",param).then(
+        await Api.post("Product",param).then(
             ()=>{
-                console.log("callApi Update",param);
+                console.log(param);
             }
         ).catch(
             (err)=>console.log(err)
         ).finally(
             props.onUpdated()
         )
-        setDialogToggle(false)
-        
+        setOpen(false)
      }
 
     return (
         <>
             <Dialog
-                open={dialogToggle}
-                onClose={() => setDialogToggle(false)}
+                open={open}
+                onClose={()=>setOpen(false)}
 
             >
                 <DialogTitle sx={{
                     backgroundColor: 'rgba(235,235,235,0.7)'
                 }}>
-                    Update Product
+                    Create Product
                 </DialogTitle>
                 <DialogContent>
                     <TextField
-                        defaultValue={par.Name}
+                        defaultValue={Name}
                         id="setName"
                         label="Name product"
                         style={{ width: 250, marginTop: 10 }}
@@ -131,7 +111,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.Company}
+                        defaultValue={Company}
                         id="setCompany"
                         label="Name Company"
                         style={{ width: 250, marginTop: 10 }}
@@ -150,7 +130,7 @@ export default forwardRef((props, ref) => {
                     <TextField
                         id="settype"
                         select
-                        defaultValue={par.type}
+                        defaultValue={type}
                         style={{ width: 250, marginTop: 10 , marginRight: 15 }}
                         onChange={(newValue) => settype(newValue.target.value)}
                         SelectProps={{
@@ -168,7 +148,7 @@ export default forwardRef((props, ref) => {
 
 
                     <TextField
-                        defaultValue={par.pricePur}
+                        defaultValue={price_in}
                         id="price_in"
                         label="Purchase Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -186,7 +166,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.price}
+                        defaultValue={price_out}
                         id="price_out"
                         label="Initial Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -204,7 +184,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.priceSale}
+                        defaultValue={price_sale}
                         id="Discount"
                         label="Discount Price"
                         style={{ width: 250, marginTop: 10 }}
@@ -222,7 +202,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.desc}
+                        defaultValue={desc}
                         id="desc"
                         label="Decription "
                         style={{ width: 250, marginTop: 10 }}
@@ -239,7 +219,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.content}
+                        defaultValue={content}
                         id="content"
                         label="Content "
                         style={{ width: 250, marginTop: 10 }}
@@ -256,7 +236,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.picture}
+                        defaultValue={picture}
                         id="picture"
                         label="Link Picture"
                         style={{ width: 250, marginTop: 10 }}
@@ -273,7 +253,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.picture1}
+                        defaultValue={picture1}
                         id="picture1"
                         label="Link Picture"
                         style={{ width: 250, marginTop: 10 }}
@@ -290,7 +270,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.Material}
+                        defaultValue={Material}
                         id="Material"
                         label="Name Material "
                         style={{ width: 250, marginTop: 10 }}
@@ -308,7 +288,7 @@ export default forwardRef((props, ref) => {
                         }}
                     />
                     <TextField
-                        defaultValue={par.quantity}
+                        defaultValue={quantity}
                         id="quantity"
                         label="Enter Quantity"
                         style={{ width: 250, marginTop: 10 }}
@@ -329,8 +309,8 @@ export default forwardRef((props, ref) => {
                 </DialogContent>
                 <DialogActions>
                     <div style={{ marginRight: 50, marginTop: 10 , display: 'flex'}} >
-                        <Button onClick={()=>setDialogToggle(false)}>Cancel</Button>
-                        <Button onClick={callApi} variant='contained'>Update</Button>
+                        <Button onClick={()=>setOpen(false)}>Cancel</Button>
+                        <Button onClick={callApi} variant='contained'>Add</Button>
                     </div>
                 </DialogActions>
 
