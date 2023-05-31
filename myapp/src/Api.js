@@ -16,7 +16,7 @@ const instance = axios.create({
 // console.log("tokeeeeeen: " + token);
 // console.log("sectionID: " + sectionID);
 instance.interceptors.request.use((request) => {
-    console.log("re",request)
+    console.log("request",request)
     return request;
 
 }, (error) => {
@@ -30,7 +30,7 @@ instance.interceptors.response.use(response => {
     }
     return response;
 }, err => {
-     console.log(err)
+     console.log('err',err)
     // SnackbarUtils.error('err.message')
     // return Promise.reject('err');
 })

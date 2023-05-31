@@ -30,21 +30,10 @@ export default forwardRef((props, ref) => {
     
 
    
-    async function funcAgree(){ 
+    function funcAgree(){ 
       console.log("Delete --",par.list);
-       await Api.delete(par.Service, {
-        params:{
-          id: par.list??[0]
-        },
-      }).then((res) => {
-        console.log("Delete ", res.data);
-   
-      }).catch((e)=>
-        console.error(e)
-      ).finally(
+      par.list.forEach( async e=> await Api.delete(par.Service+'/'+e))
       props.onUpdated()
-      
-      )
       setOpen(false)
      }
 

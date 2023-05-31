@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef ,useLayoutEffect } from 'react';
 import Api from '../../Api';
 import { TextField, Box, Button } from '@mui/material';
 import ProductInsert from './ProductInsert'
@@ -18,13 +18,12 @@ export default function Product() {
   const [page, setpage] = useState(0)
   const [Delete, setDelete] = useState([])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log("API...");
     searchData()
   }, [category, type, page])
 
   useEffect(() => {
-    console.log("API option...");
     Api.get("code", {
       params: {
         CodeName: 'typ_pro',
@@ -178,7 +177,7 @@ const columns = [
     field: 'price',
     headerName: 'Init Price',
     width: 110,
-    // editable: true,
+
   },
 
   {
@@ -186,7 +185,7 @@ const columns = [
     headerName: 'Discount Price',
     type: 'number',
     width: 110,
-    // editable: true,
+
   },
 
   {
@@ -194,19 +193,7 @@ const columns = [
     headerName: 'Quantity',
     type: 'number',
     width: 110,
-    // editable: true,
+
   },
 ];
 
-// Name: Name,
-//         Company: Company,
-//         price_in: price_in,
-//         price_out: price_out,
-//         price_sale: price_sale,
-//         type: type,
-//         desc: desc,
-//         content: content,
-//         picture: picture,
-//         picture1: picture1,
-//         Material: Material,
-//         quantity: quantity,
