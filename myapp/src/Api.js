@@ -16,7 +16,7 @@ const instance = axios.create({
 // console.log("tokeeeeeen: " + token);
 // console.log("sectionID: " + sectionID);
 instance.interceptors.request.use((request) => {
-    console.log("request",request)
+    // console.log("request",request)
     return request;
 
 }, (error) => {

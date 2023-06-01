@@ -29,10 +29,10 @@ export default function Product() {
         CodeName: 'typ_pro',
       }
     }).then((res) => {
-      console.log("op in ", res.data);
+      console.log("typ_pro ", res.data);
       setOption(res.data.data);
     })
-    searchData()
+    // searchData()
   }, [])
 
   const searchData = async () => {
@@ -130,11 +130,10 @@ export default function Product() {
             pagination: {
               paginationModel: {
                 pageSize: 100,
-                pagg: 1,
               },
             },
           }}
-          page={1}
+          // page={1}
           rowHeight={30}
           headerHeight={30}
           pageSizeOptions={[15, 50, 100, 500]}
