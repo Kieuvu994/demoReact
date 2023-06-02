@@ -23,24 +23,12 @@ export default function Orders() {
     searchData()
   }, [category, type, page])
 
-  useEffect(() => {
-    console.log("API option...");
-    Api.get("code", {
-      params: {
-        CodeName: 'typ_pro',
-      }
-    }).then((res) => {
-      console.log("op in ", res.data);
-      setOption(res.data.data);
-    })
-    searchData()
-  }, [])
-
   const searchData = async () => {
-    await Api.get("Product", {
+    await Api.get("Order", {
       params: {
-        category: category,
-        type: type,
+        searchBeginDate: category,
+        searchEndDate: type,
+        user_id: type,
       }
     })
     .then((res) => {
