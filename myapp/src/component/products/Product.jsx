@@ -2,12 +2,12 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState, useRef ,useLayoutEffect } from 'react';
 import Api from '../../Api';
-import { TextField, Box, Button } from '@mui/material';
+import { TextField, Box, Button, colors } from '@mui/material';
 import ProductInsert from './ProductInsert'
 import ProductUpdate from './ProductUpdate'
 import Message from '../AlertDialog';
-
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import Icon from '@mui/material/Icon';
 
 export default function Product() {
   const [data, setdata] = useState([]);
@@ -104,9 +104,14 @@ export default function Product() {
               onClick={() => childRef.current.handleClickOpen()}>Add
             </Button>
 
-            <Button variant='contained' color='primary' style={{ display: 'inline', height: '40px', width: '100px', marginLeft: '10px' }}
-              onClick={() => AlertDialog1.current.handleClickOpen({title:'Are you Sure?',Service: 'Product', list: Delete})}>Delete
+            <Button variant='contained' color='primary' style={{ display: 'inline', height: '40px', width: '30px', marginLeft: '10px',title:'Delete' }}
+              onClick={() => AlertDialog1.current.handleClickOpen({title:'Are you Sure?',Service: 'Product', list: Delete})}
+              disabled={Delete.length<1}
+              >
+                <DeleteIcon />
             </Button>
+
+
           </div>
         </div>
       </Box>
