@@ -9,12 +9,14 @@ import logo from './assets/images/logo.png'
 import { Button ,ButtonGroup} from '@mui/material';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useState } from 'react';
 
 
 
 function App() {
+  const [menu, setMenu] =useState('')
   const buttons = [
-    <Button key="Order"><Link to="/Orders"> Order </Link></Button>,
+    <Button key="Order" color='secondary'><Link color='secondary' onClick={()=>setMenu('Order')} to="/Orders"> Order </Link></Button>,
     <Button key="Product"><Link to="/Product"> Product </Link></Button>,
     <Button key="Copyright"><Link to="/Copyright"> Copyright </Link></Button>,
   ];
@@ -26,6 +28,7 @@ function App() {
         orientation="vertical"
         aria-label="vertical contained button group"
         variant="text"
+      
       >
         {buttons}
       </ButtonGroup>

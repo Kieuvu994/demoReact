@@ -7,7 +7,7 @@ import ProductInsert from './ProductInsert'
 import ProductUpdate from './ProductUpdate'
 import Message from '../AlertDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Icon from '@mui/material/Icon';
+import {Add} from '@mui/icons-material'
 
 export default function Product() {
   const [data, setdata] = useState([]);
@@ -100,15 +100,16 @@ export default function Product() {
             variant="standard"
           />
           <div style={{ display: 'flex', height: '50px' }}>
-            <Button variant='contained' color='primary' style={{ display: 'inline', height: '40px', width: '40px', }}
-              onClick={() => childRef.current.handleClickOpen()}>Add
+            <Button color='primary' style={{ display: 'inline', height: '40px', width: '40px', }}
+              onClick={() => childRef.current.handleClickOpen()}>
+                <Add color={'secondary'}/>
             </Button>
 
-            <Button variant='contained' color='primary' style={{ display: 'inline', height: '40px', width: '30px', marginLeft: '10px',title:'Delete' }}
+            <Button   style={{ display: Delete.length>0?'inline':'none', height: '40px', width: '30px', marginLeft: '10px',title:'Delete' }}
               onClick={() => AlertDialog1.current.handleClickOpen({title:'Are you Sure?',Service: 'Product', list: Delete})}
               disabled={Delete.length<1}
               >
-                <DeleteIcon />
+                <DeleteIcon color={'secondary'}/>  
             </Button>
 
 
@@ -144,6 +145,7 @@ export default function Product() {
           pageSizeOptions={[15, 50, 100, 500]}
           checkboxSelection
           onRowDoubleClick={e => documentDetailsRef.current.openDialog(e.row)}
+  
         />
       </Box>
     </>
