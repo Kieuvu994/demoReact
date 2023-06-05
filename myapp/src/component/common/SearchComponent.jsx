@@ -1,6 +1,6 @@
 import { TextField, Box, Button, colors } from '@mui/material';
 import { useState } from 'react';
-export const OptionText = ({ defaultValue, option, onChange }) => {
+export const OptionText = ({ defaultValue, option, helperText, onChange }) => {
     return (
         <TextField
             id="standard-select-currency-native"
@@ -10,7 +10,7 @@ export const OptionText = ({ defaultValue, option, onChange }) => {
             SelectProps={{
                 native: true,
             }}
-            helperText="Please select Type Product"
+            helperText={helperText}
             variant="standard"
         >
             <option value="">None</option>
@@ -22,18 +22,34 @@ export const OptionText = ({ defaultValue, option, onChange }) => {
         </TextField>
     )
 }
-export const Text = ({ defaultValue, onChange }) => {
+export const Text = ({ defaultValue, helperText, onChange }) => {
     return (
         <TextField
-            label="Search"
             id="standard-start-adornment"
             defaultValue={defaultValue}
-            helperText="Please select Type Product"
+            helperText={helperText}
             onChange={onChange}
             InputProps={{
                 'aria-label': 'weight',
             }}
             variant="standard"
         />
+    )
+}
+export const Date = ({ defaultValue, helperText, onChange }) => {
+    return (
+        <>
+            <TextField
+                id="standard-start-adornment"
+                defaultValue={defaultValue}
+                helperText={helperText}
+                onChange={onChange}
+                type='date'
+                InputProps={{
+                    'aria-label': 'weight',
+                }}
+                variant="standard"
+            />
+        </>
     )
 }

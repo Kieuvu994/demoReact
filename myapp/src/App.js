@@ -42,7 +42,7 @@ function App() {
             <Link to='/Product'><i className="bi bi-person" /></Link>
             <Link to='/Product'><i className="bi bi-github" /></Link>
             <Link to='/StartEditButtonGrid'><i className="bi bi-facebook" /></Link>
-            <Link to='/'><i className="bi bi-twitter" /></Link>
+            <Link to='/Copyright'><i className="bi bi-twitter" /></Link>
           </div>
         </div>
         <div className='body'>

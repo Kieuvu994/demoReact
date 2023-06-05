@@ -31,7 +31,7 @@
   border-bottom: black ;
   display: flex;
   padding-top: 15px;
-  width: 70%;
+  width: 80%;
   justify-content: space-evenly;
 
 }
@@ -68,56 +68,43 @@ button{
 
 .body{
   padding-top: var(--headerHeight);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.Search{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchLeft{
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+
+
+}
+.searchItem{
+  width: 30%;
+  min-width: 200px;
+  height: 40px;
+  margin: 0px 5px;
+  display: flex;
+  padding: 5px auto;
+}
+.ActionRight{
+  width: 20%;
+  min-width: 100px;
+  flex-wrap: wrap;
+  display: flex;
+
+}
+.ActionItem{
+  width: 100px;
+  display: flex;
+  height: 40px;
+  margin: 10px 5px;
 }
 
 
-
-/* 
-.flexcore{
-  position: fixed;
-}
-
-.nav {
-  color: black;
-  position: absolute;
-  top:5px;
-  left: 5px;
-}
-.mid {
-  position: absolute;
-  top:5px;
-  left: 85%;
-}
-.right{
-  position: absolute;
-  top:5px;
-  right: 5px;
-  left: 95%;
-}
-
-.nav  ul ,.nav input[type="checkbox"]{
-  display: none;
-  position: absolute;
-  z-index: 1000;
-}
-.nav input:checked ~ ul{
-  display:  inline-flex;
-}
-.contact-list{
-  margin-top: 20px;
-  width: 300px;
-}
-.contact-list li{
-  margin: 5px 10px;
-  list-style: none;
-}
-.bar{
-  width: 30px;
-  height: 30px;
-  display: inline;
-  z-index: -10;
-}
-a{
-  color: black;
-  text-decoration: none;
-} */
