@@ -6,7 +6,11 @@ import { TextField, Box, Button, colors } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Add } from '@mui/icons-material'
 import { DataGrid, GridCellModes } from '@mui/x-data-grid';
-
+import {
+  randomCreatedDate,
+  randomTraderName,
+  randomUpdatedDate,
+} from '@mui/x-data-grid-generator';
 export default Orders
 
 
@@ -24,30 +28,32 @@ function Orders() {
     console.log(search)
     console.log(data)
   }, [search, searchName])
-  useEffect(() => {
-    Api.get('Order',{
-      params: {
-        searchBeginDate: search.begin,
-        searchEndDate: search.end,
-        searchName: searchName,
-      }
-    }).then((res) => {
-      setData(res.data.data);
-      
-    })
-    console.log(search)
-    console.log(data)
+  useEffect(()=>
+    {
+      getdata();
+      console.log('data',data);
   }, [])
-  const getdata =()=>{ Api.get('Order',{
-    params: {
-      searchBeginDate: search.begin,
-      searchEndDate: search.end,
+  const getdata = () => {
+    Api.get("Order",{
+      params:{
+      searchBeginDate: search.begin?search.begin:null,
+      searchEndDate: search.end?search.end:null,
       searchName: searchName,
-    }
-  }).then((res) => {
-    setData(res.data.data);
+    }}).then((res) => {
+      setData(res.data.data);
+    })}
+
+  // const getdata =()=>{ 
+  //   Api.get('Order',{
+  //   params: {
+  //     searchBeginDate: search.begin,
+  //     searchEndDate: search.end,
+  //     searchName: searchName,
+  //   }
+  // }).then((res) => {
+  //   setData(res.data.data);
     
-  })}
+  // })}
   return (
     <>
 
@@ -91,8 +97,17 @@ function Orders() {
       </div>
       <div>
       <DataGrid
-        rows={data}
+        pagination
+        rows={rows}
         columns={columns}
+        getRowId={(r) => (r.id)}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 100,
+            },
+          },
+        }}
       />
       </div>
 
@@ -122,5 +137,16 @@ const columns = [
     headerName: 'Payment',
     width: 220,
     editable: true,
+  },
+];
+const rows = [
+  {
+    id: 1,
+    Name: 'anhem',
+    created: randomCreatedDate(),
+    last_update: randomUpdatedDate(),
+    status: 'aaas',
+    Pay:1222,
+
   },
 ];
