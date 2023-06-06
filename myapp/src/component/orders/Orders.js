@@ -1,62 +1,58 @@
-import { Component, useEffect, useRef, useState } from "react";
+import { Component, useLayoutEffect, useEffect, useRef, useState } from "react";
 import { OptionText, Text, Date } from "../common/SearchComponent";
 import Api from '../../Api'
-import { FormatAlignJustify, FormatAlignJustifyTwoTone } from "@mui/icons-material";
 import { TextField, Box, Button, colors } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Add } from '@mui/icons-material'
 import { DataGrid, GridCellModes } from '@mui/x-data-grid';
 import {
   randomCreatedDate,
-  randomTraderName,
   randomUpdatedDate,
 } from '@mui/x-data-grid-generator';
 export default Orders
 
 
 function Orders() {
-  const [data, setData] = useState()
+  const [data, setData] = useState([])
   const [searchName, setSearchName] = useState('')
+  const [option, setOption] = useState([])
   const [search, setSearch] = useState(
     {
       begin: '',
       end: '',
     }
   )
-  useEffect(() => {
+  useLayoutEffect(() => {
     getdata()
     console.log(search)
     console.log(data)
   }, [search, searchName])
-  useEffect(()=>
-    {
-      getdata();
-      console.log('data',data);
+  useEffect(() => {
+    Api.get("code", {
+      params: {
+        CodeName: 'ord_sta',
+      }
+    }).then((res) => {
+      console.log("typ_pro ", res.data);
+      setOption(res.data.data);
+    })
   }, [])
-  const getdata = () => {
-    Api.get("Order",{
-      params:{
-      searchBeginDate: search.begin?search.begin:null,
-      searchEndDate: search.end?search.end:null,
-      searchName: searchName,
-    }}).then((res) => {
+  const getdata = async () => {
+    await Api.get("Order", {
+      params: {
+        searchBeginDate: search.begin ? search.begin : null,
+        searchEndDate: search.end ? search.end : null,
+        searchName: searchName,
+      }
+    }).then((res) => {
       setData(res.data.data);
-    })}
+    })
+  }
 
-  // const getdata =()=>{ 
-  //   Api.get('Order',{
-  //   params: {
-  //     searchBeginDate: search.begin,
-  //     searchEndDate: search.end,
-  //     searchName: searchName,
-  //   }
-  // }).then((res) => {
-  //   setData(res.data.data);
-    
-  // })}
+
+
   return (
     <>
-
       <div className="Search">
         <div className="searchLeft">
           <div className="searchItem">
@@ -95,20 +91,22 @@ function Orders() {
           <DeleteIcon color={'secondary'} />
         </Button>
       </div>
-      <div>
-      <DataGrid
-        pagination
-        rows={rows}
-        columns={columns}
-        getRowId={(r) => (r.id)}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 100,
+      <div >
+        <DataGrid
+          pagination
+          rows={data}
+          columns={columns}
+          getRowId={(r) => (r.id)}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 100,
+              },
             },
-          },
-        }}
-      />
+          }}
+          rowHeight={30}
+          headerHeight={30}
+        />
       </div>
 
 
@@ -116,26 +114,26 @@ function Orders() {
   )
 }
 const columns = [
-  { field: 'id', headerName: 'ID', width: 180, editable: false },
+  { field: 'id', headerName: 'ID', width: 80, editable: false },
   { field: 'Name', headerName: 'Name', width: 180, editable: false },
-  { field: 'created', headerName: 'Date created', type: 'date', editable: false,width: 180, },
+  { field: 'created', headerName: 'Date created', editable: false, width: 180, },
   {
     field: 'last_update',
     headerName: 'Date Update',
-    type: 'date',
+
     width: 180,
     editable: false,
   },
   {
     field: 'status',
     headerName: 'status',
-    width: 220,
+    width: 120,
     editable: true,
   },
   {
     field: 'Pay',
     headerName: 'Payment',
-    width: 220,
+    width: 120,
     editable: true,
   },
 ];
@@ -146,7 +144,7 @@ const rows = [
     created: randomCreatedDate(),
     last_update: randomUpdatedDate(),
     status: 'aaas',
-    Pay:1222,
+    Pay: 1222,
 
   },
 ];

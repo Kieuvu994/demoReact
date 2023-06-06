@@ -120,7 +120,6 @@ export default function Product() {
       <Message ref={AlertDialog1} onUpdated={()=>setpage(1 - page)} />
       <ProductInsert ref={childRef} onUpdated={() => setpage(1 - page)} />
       <ProductUpdate ref={documentDetailsRef} onUpdated={() => setpage(1 - page)} />
-      <Box sx={{ width: '100%' }}>
         <DataGrid
           pagination
           rows={data}
@@ -147,7 +146,7 @@ export default function Product() {
           onRowDoubleClick={e => documentDetailsRef.current.openDialog(e.row)}
   
         />
-      </Box>
+
     </>
   );
 }
